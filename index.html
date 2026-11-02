@@ -1,0 +1,546 @@
+
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover">
+
+<meta name="theme-color" content="#172b40">
+<meta name="description" content="Түргеш және Қарлұқ қағанаттары туралы тарихи бейнебаян">
+
+<title>Түргеш және Қарлұқ қағанаттары | AJTHEBOLD</title>
+
+<style>
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    -webkit-tap-highlight-color: transparent;
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+    min-height: 100%;
+    overflow: hidden;
+    background: #111;
+    color: white;
+    font-family: Georgia, serif;
+    touch-action: manipulation;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.video {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    height: 100dvh;
+    max-width: 600px;
+    overflow: hidden;
+    background: #192b3c;
+    isolation: isolate;
+}
+
+.scene {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding:
+        max(35px, env(safe-area-inset-top))
+        clamp(16px, 5vw, 30px)
+        max(155px, env(safe-area-inset-bottom) + 125px);
+
+    text-align: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity .8s ease;
+
+    background:
+      radial-gradient(ellipse at 50% 30%, #a87946 0%, transparent 45%),
+      linear-gradient(180deg, #172b40, #79573b 65%, #242b28);
+}
+
+.scene.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.scene::before {
+    content: "⚔";
+    position: absolute;
+    top: 9%;
+    font-size: clamp(48px, 12vw, 75px);
+    color: #e8bd78;
+    opacity: .25;
+    animation: float 4s infinite ease-in-out;
+    pointer-events: none;
+}
+
+.scene::after {
+    content: "";
+    position: absolute;
+    width: 150%;
+    height: 30%;
+    bottom: 0;
+    background: linear-gradient(170deg, transparent 35%, #1c2925 36%);
+    opacity: .8;
+    pointer-events: none;
+}
+
+@keyframes float {
+    0%,100% { transform: translateY(0) rotate(-5deg); }
+    50% { transform: translateY(-15px) rotate(5deg); }
+}
+
+.content {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    max-width: 500px;
+    animation: appear 1s ease;
+}
+
+@keyframes appear {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.era {
+    color: #f4c77e;
+    font-family: Arial, sans-serif;
+    font-size: clamp(10px, 3vw, 13px);
+    letter-spacing: 3px;
+    margin-bottom: 18px;
+    text-transform: uppercase;
+}
+
+h1 {
+    font-size: clamp(25px, 7.5vw, 49px);
+    line-height: 1.15;
+    color: #ffe0a8;
+    text-shadow: 0 4px 15px #000;
+    margin-bottom: 20px;
+    overflow-wrap: anywhere;
+}
+
+p {
+    font-family: Arial, sans-serif;
+    font-size: clamp(14px, 4.2vw, 21px);
+    line-height: 1.55;
+    color: #fff7e8;
+    text-shadow: 0 2px 8px #000;
+    overflow-wrap: anywhere;
+}
+
+.symbol {
+    font-size: clamp(35px, 10vw, 48px);
+    margin-bottom: 18px;
+    filter: drop-shadow(0 5px 8px #000);
+}
+
+.watermark {
+    position: absolute;
+    z-index: 5;
+    top: max(18px, env(safe-area-inset-top));
+    right: 15px;
+    font-family: Arial, sans-serif;
+    font-size: 10px;
+    letter-spacing: 2px;
+    color: #ffffff88;
+    pointer-events: none;
+}
+
+.controls {
+    position: absolute;
+    z-index: 10;
+    bottom: 0;
+    width: 100%;
+    padding: 12px 12px max(15px, env(safe-area-inset-bottom));
+    text-align: center;
+    background: linear-gradient(transparent, #101923e8);
+}
+
+.progress {
+    width: 100%;
+    height: 5px;
+    background: #ffffff45;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 12px;
+}
+
+.bar {
+    height: 100%;
+    width: 0%;
+    background: #f3c57b;
+    transition: width .2s linear;
+}
+
+.counter {
+    font-family: Arial, sans-serif;
+    font-size: 12px;
+    color: #f4d7a8;
+    margin-bottom: 10px;
+}
+
+.buttons {
+    display: flex;
+    justify-content: center;
+    gap: 7px;
+    flex-wrap: wrap;
+}
+
+button {
+    border: 1px solid #e8bd78;
+    background: #182536e8;
+    color: white;
+    padding: 12px 14px;
+    min-height: 42px;
+    border-radius: 30px;
+    font-size: 12px;
+    cursor: pointer;
+    touch-action: manipulation;
+}
+
+button:active {
+    transform: scale(.96);
+}
+
+@media (max-height: 600px) {
+    .scene {
+        padding-bottom: 110px;
+    }
+
+    .scene::before {
+        top: 3%;
+        font-size: 40px;
+    }
+
+    .symbol {
+        margin-bottom: 8px;
+    }
+
+    h1 {
+        margin-bottom: 10px;
+    }
+
+    p {
+        font-size: clamp(12px, 2.8vh, 17px);
+        line-height: 1.4;
+    }
+
+    .controls {
+        padding-top: 5px;
+    }
+
+    button {
+        padding: 8px 11px;
+        min-height: 35px;
+    }
+}
+
+@media (min-width: 700px) {
+    .video {
+        max-width: 600px;
+        height: 100dvh;
+        max-height: 1067px;
+        aspect-ratio: 9 / 16;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: .01ms !important;
+        transition-duration: .01ms !important;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<main class="video">
+
+<div class="watermark">AJTHEBOLD • HISTORY</div>
+
+<div id="scenes"></div>
+
+<div class="controls">
+
+    <div class="counter" id="counter">0:00 / 2:26</div>
+
+    <div class="progress">
+        <div class="bar" id="bar"></div>
+    </div>
+
+    <div class="buttons">
+        <button id="playBtn">▶ Бастау</button>
+        <button id="pauseBtn">Ⅱ Тоқтату</button>
+        <button id="restartBtn">↻ Қайта бастау</button>
+        <button id="fullscreenBtn">⛶ Экран</button>
+    </div>
+
+</div>
+</main>
+
+<script>
+"use strict";
+
+const TOTAL = 146;
+
+const scenes = [
+{
+ title: "ТҮРГЕШ ҚАҒАНАТЫ",
+ era: "VII–VIII ҒАСЫРЛАР",
+ symbol: "🏹",
+ text: "Түргеш қағанаты Жетісу жерінде, 704 жылы құрылды. Оның негізін қалаған Үшлік қаған болды. Қағанаттың орталығы Суяб қаласы еді. Түргештер Ұлы Жібек жолының маңызды бөлігін бақылап, аймақта үлкен саяси күшке айналды."
+},
+{
+ title: "ТҮРГЕШТЕРДІҢ ЖЕРІ",
+ era: "ЖЕТІСУ ӨҢІРІ",
+ symbol: "🏔️",
+ text: "Түргештер негізінен Іле, Шу және Талас өзендерінің бойын мекендеді. Бұл өлке мал шаруашылығына да, саудаға да қолайлы болды. Қалаларда қолөнер дамып, керуендер шығыс пен батысты байланыстырып жатты."
+},
+{
+ title: "СҰЛУ ҚАҒАН",
+ era: "715–738 ЖЫЛДАР",
+ symbol: "👑",
+ text: "Түргеш қағанатының ең белгілі билеушілерінің бірі — Сұлу қаған. Ол араб әскерлерінің жорықтарына қарсы күресіп, мемлекеттің тәуелсіздігін сақтауға тырысты. Тарихта ол батыл әрі көреген билеуші ретінде қалды."
+},
+{
+ title: "ТАРИХИ ҚАРСЫЛЫҚ",
+ era: "VIII ҒАСЫР",
+ symbol: "⚔️",
+ text: "Бұл кезеңде Жетісу үшін арабтар мен Қытайдың Тан империясы арасында күрес жүрді. Түргештер осы саяси тартыстардың ортасында қалды. Олар өз жерін қорғап, аймақтағы күштердің тепе-теңдігіне ықпал етті."
+},
+{
+ title: "АТАҚТЫ ТАЛАС ШАЙҚАСЫ",
+ era: "751 ЖЫЛ",
+ symbol: "🛡️",
+ text: "751 жылы Талас өзені маңында арабтар мен Қытай әскері арасында ірі шайқас болды. Бұл оқиға Орталық Азия тарихындағы маңызды бетбұрысқа айналды. Қарлұқтардың осы шайқастағы әрекеті Қытай әскерінің жеңілуіне әсер етті."
+},
+{
+ title: "ҚАРЛҰҚ ҚАҒАНАТЫ",
+ era: "756–940 ЖЫЛДАР",
+ symbol: "🐎",
+ text: "756 жылы Жетісу жерінде Қарлұқ мемлекеті күшейіп, қағанат құрылды. Қарлұқтар бұрын Түргештер ықпалында болған аумақтарды иеленді. Олардың негізгі орталықтарының бірі Суяб қаласы болды."
+},
+{
+ title: "ҚАРЛҰҚТАРДЫҢ ӨМІРІ",
+ era: "САУДА ЖӘНЕ МӘДЕНИЕТ",
+ symbol: "🏙️",
+ text: "Қарлұқтар мал шаруашылығымен айналысып, қалаларда сауда мен қолөнерді дамытты. Ұлы Жібек жолы арқылы түрлі халықтармен байланыс орнатты. Олардың қоғамында көшпелі және отырықшы өмір салты қатар дамыды."
+},
+{
+ title: "ҚАҒАНАТТЫҢ МҰРАСЫ",
+ era: "IX–X ҒАСЫРЛАР",
+ symbol: "📜",
+ text: "Қарлұқтар Жетісу мен Оңтүстік Қазақстан тарихында маңызды орын алды. Қарлұқ тайпалары кейін Қарахан мемлекетінің қалыптасуына қатысқан халықтардың бірі болды. Олардың саяси және мәдени мұрасы кейінгі дәуірлерге жалғасты."
+},
+{
+ title: "ТАРИХТАҒЫ ІЗІ",
+ era: "ҚОРЫТЫНДЫ",
+ symbol: "🏆",
+ text: "Түргеш және Қарлұқ қағанаттары — Қазақстан тарихындағы маңызды мемлекеттер. Олар Жетісуды қорғап, сауда мен мәдениеттің дамуына үлес қосты. Бұл қағанаттардың тарихы — халқымыздың мемлекеттілік дәстүрінің бір бөлігі."
+}
+];
+
+const durations = [17,16,17,16,17,16,16,16,15];
+
+const container = document.getElementById("scenes");
+const counter = document.getElementById("counter");
+const bar = document.getElementById("bar");
+
+let current = 0;
+let elapsed = 0;
+let playing = false;
+let timer = null;
+let lastTime = 0;
+
+function createScenes() {
+    const fragment = document.createDocumentFragment();
+
+    scenes.forEach((s, i) => {
+        const div = document.createElement("section");
+        div.className = "scene";
+        div.id = "scene" + i;
+
+        const content = document.createElement("div");
+        content.className = "content";
+
+        const era = document.createElement("div");
+        era.className = "era";
+        era.textContent = s.era;
+
+        const symbol = document.createElement("div");
+        symbol.className = "symbol";
+        symbol.textContent = s.symbol;
+
+        const title = document.createElement("h1");
+        title.textContent = s.title;
+
+        const text = document.createElement("p");
+        text.textContent = s.text;
+
+        content.append(era, symbol, title, text);
+        div.appendChild(content);
+        fragment.appendChild(div);
+    });
+
+    container.appendChild(fragment);
+}
+
+function formatTime(seconds) {
+    const m = Math.floor(seconds / 60);
+    const s = Math.floor(seconds % 60);
+    return m + ":" + String(s).padStart(2, "0");
+}
+
+function findScene(time) {
+    let sum = 0;
+
+    for (let i = 0; i < durations.length; i++) {
+        sum += durations[i];
+
+        if (time < sum) return i;
+    }
+
+    return durations.length - 1;
+}
+
+function showScene(index) {
+    if (index === current &&
+        document.getElementById("scene" + index).classList.contains("active")) {
+        return;
+    }
+
+    document.querySelectorAll(".scene").forEach(scene => {
+        scene.classList.remove("active");
+    });
+
+    document.getElementById("scene" + index).classList.add("active");
+    current = index;
+}
+
+function updateUI() {
+    counter.textContent = formatTime(elapsed) + " / 2:26";
+    bar.style.width = (elapsed / TOTAL * 100) + "%";
+}
+
+function tick() {
+    if (!playing) return;
+
+    const now = Date.now();
+    const delta = (now - lastTime) / 1000;
+
+    if (delta >= 0.1) {
+        elapsed += delta;
+        lastTime = now;
+
+        if (elapsed >= TOTAL) {
+            elapsed = TOTAL;
+            stopVideo();
+            showScene(scenes.length - 1);
+            updateUI();
+            return;
+        }
+
+        showScene(findScene(elapsed));
+        updateUI();
+    }
+
+    timer = requestAnimationFrame(tick);
+}
+
+function startVideo() {
+    if (playing) return;
+
+    if (elapsed >= TOTAL) {
+        elapsed = 0;
+    }
+
+    playing = true;
+    showScene(findScene(elapsed));
+    lastTime = Date.now();
+
+    timer = requestAnimationFrame(tick);
+}
+
+function stopVideo() {
+    playing = false;
+
+    if (timer !== null) {
+        cancelAnimationFrame(timer);
+        timer = null;
+    }
+}
+
+function pauseVideo() {
+    stopVideo();
+}
+
+function restartVideo() {
+    stopVideo();
+
+    elapsed = 0;
+    current = -1;
+
+    showScene(0);
+    updateUI();
+    startVideo();
+}
+
+async function toggleFullscreen() {
+    const element = document.querySelector(".video");
+
+    try {
+        if (!document.fullscreenElement &&
+            !document.webkitFullscreenElement) {
+
+            if (element.requestFullscreen) {
+                await element.requestFullscreen();
+            } else if (element.webkitRequestFullscreen) {
+                element.webkitRequestFullscreen();
+            }
+        } else {
+            if (document.exitFullscreen) {
+                await document.exitFullscreen();
+            } else if (document.webkitExitFullscreen) {
+                document.webkitExitFullscreen();
+            }
+        }
+    } catch (error) {
+        console.log("Fullscreen unavailable:", error);
+    }
+}
+
+document.getElementById("playBtn").addEventListener("click", startVideo);
+document.getElementById("pauseBtn").addEventListener("click", pauseVideo);
+document.getElementById("restartBtn").addEventListener("click", restartVideo);
+document.getElementById("fullscreenBtn").addEventListener("click", toggleFullscreen);
+
+createScenes();
+current = -1;
+showScene(0);
+updateUI();
+
+</script>
+
+</body>
+</html>
